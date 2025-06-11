@@ -12,8 +12,8 @@ Apache RocketMQ MCP Server
 rocketmq:
   clusters:
     - id: 1
-      name: xiaozou
-      namesrvAddr: 127.0.0.1:9876
+      name: xiaoZou
+      namesrv-addr: 127.0.0.1:9876
 ```
 
 2. 运行 [MCPApplication.java](src/main/java/com/rocketmq/mcp/MCPApplication.java)
@@ -32,7 +32,34 @@ npx @modelcontextprotocol/inspector node build/index.js
 
 ![mcp-inspector.png](doc/images/mcp-inspector.png)
 
+# 配置 mcp server
+
+```json
+{
+  "mcpServers": {
+    "rocketmq-mcp": {
+      "url": "http://localhost:8081/sse",
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
 
 # 使用自然语言查询消息
 
+
+
+```shell
+查询集群为xiaozou，topic为xiao-zou-topic，消息id为AC1400010D3E068DE14531D104E40176的消息
+```
+
 ![vs-code-cline.png](doc/images/vs-code-cline.png)
+
+# 使用自然语言发送消息
+
+```shell
+发送消息到集群为`xiaozou`,topic为`xiao-zou-topic`,消息内容为wh-test-send
+```
+
+![vs-code-clien-send-message.png](doc/images/vs-code-clien-send-message.png)

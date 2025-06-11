@@ -2,6 +2,7 @@ package com.rocketmq.mcp.common.config;
 
 import com.rocketmq.mcp.common.MQClusterHold;
 import com.rocketmq.mcp.infra.entity.Cluster;
+import com.rocketmq.mcp.service.ClusterService;
 import com.rocketmq.mcp.service.MessageService;
 import java.time.Duration;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
@@ -23,10 +24,10 @@ import org.springframework.context.annotation.Configuration;
 public class MCPAutoConfiguration {
 
     @Bean
-    public ToolCallbackProvider myTools(MessageService messageService) {
+    public ToolCallbackProvider myTools(MessageService messageService, ClusterService clusterService) {
         return MethodToolCallbackProvider
             .builder()
-            .toolObjects(messageService)
+            .toolObjects(messageService, clusterService)
             .build();
     }
     
