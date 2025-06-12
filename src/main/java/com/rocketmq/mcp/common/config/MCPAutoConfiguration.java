@@ -4,6 +4,7 @@ import com.rocketmq.mcp.common.MQClusterHold;
 import com.rocketmq.mcp.infra.entity.Cluster;
 import com.rocketmq.mcp.service.ClusterService;
 import com.rocketmq.mcp.service.MessageService;
+import com.rocketmq.mcp.service.TopicService;
 import java.time.Duration;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
@@ -24,13 +25,14 @@ import org.springframework.context.annotation.Configuration;
 public class MCPAutoConfiguration {
 
     @Bean
-    public ToolCallbackProvider myTools(MessageService messageService, ClusterService clusterService) {
+    public ToolCallbackProvider myTools(MessageService messageService, ClusterService clusterService,
+        TopicService topicService) {
         return MethodToolCallbackProvider
             .builder()
-            .toolObjects(messageService, clusterService)
+            .toolObjects(messageService, clusterService, topicService)
             .build();
     }
-    
+
     @Bean
     public MQClusterHold mqClusterHold(RocketMQProperties rocketMQProperties) {
         return new MQClusterHold(rocketMQProperties.getClusters());
@@ -52,7 +54,7 @@ public class MCPAutoConfiguration {
         // 空闲检测时间
         genericKeyedObjectPoolConfig.setTimeBetweenEvictionRuns(Duration.ofSeconds(20));
 
-         genericKeyedObjectPoolConfig.setJmxEnabled(false);
+        genericKeyedObjectPoolConfig.setJmxEnabled(false);
         MQAdminPooledObjectFactory mqAdminPooledObjectFactory = new MQAdminPooledObjectFactory();
         return new GenericKeyedObjectPool<>(
             mqAdminPooledObjectFactory,
