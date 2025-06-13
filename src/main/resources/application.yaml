@@ -1,7 +1,7 @@
 rocketmq:
   clusters:
     - id: 1
-      name: ciderTest
+      name: xiaozou
       namesrv-addr: 127.0.0.1:9876
 
 
